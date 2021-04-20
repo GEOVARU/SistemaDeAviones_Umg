@@ -1,0 +1,38 @@
+CREATE DATABASE  BD_UMG
+USE BD_UMG;
+
+CREATE TABLE TB_PERSONA(
+Id int not null identity(1,1) primary key,
+Usuario varchar(50),
+Pass varchar(50)
+);
+
+CREATE TABLE TB_VUELO(
+Id int not null identity(1,1) primary key,
+Origen varchar(50),
+Destino varchar(50),
+Fecha varchar(50),
+HoraSalida varchar(50),
+HoraLlegada varchar(50),
+TipoAvion varchar(50),
+Estatus varchar(50)
+);
+
+SELECT *FROM TB_PERSONA
+SELECT *FROM TB_VUELO
+
+/*
+ * DROP TABLE TB_PERSONA
+ * DROP TABLE TB_VUELO
+ */
+
+
+INSERT INTO TB_PERSONA(Usuario,Pass) VALUES('gramirez','gramirez' )
+INSERT INTO TB_PERSONA(Usuario,Pass) VALUES('msarazua','msarazua' )
+INSERT INTO TB_PERSONA(Usuario,Pass) VALUES('rsoto','rsoto' )
+
+
+INSERT INTO TB_VUELO(Origen,Destino,Fecha,HoraSalida,HoraLlegada,TipoAvion,Estatus) VALUES('Guatemala','Chicago','01/01/2021','01', '12', 'Turboner 3000','Programado' )
+INSERT INTO TB_VUELO(Origen,Destino,Fecha,HoraSalida,HoraLlegada,TipoAvion,Estatus) VALUES('Chicago','Guatemala','05/11/2021','10', '18', 'flash 3000','Cancelado' )
+
+
