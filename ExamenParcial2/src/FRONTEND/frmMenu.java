@@ -138,7 +138,7 @@ public class frmMenu extends javax.swing.JFrame {
 
     private void btnRegistro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistro1ActionPerformed
         // TODO add your handling code here:
-        frmReserva F = new frmReserva();
+        frmTipoVuelo F = new frmTipoVuelo();
         F.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnRegistro1ActionPerformed

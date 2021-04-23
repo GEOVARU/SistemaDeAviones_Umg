@@ -5,13 +5,14 @@
  */
 package DATA;
 
+import BACKEND.clsReservacion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import BACKEND.clsVuelos;
+import javax.swing.DefaultComboBoxModel;
 
 
 /**
@@ -118,5 +119,81 @@ public class clsQuerys {
             System.out.println(Ex.getMessage());
         }
         return Resp;
+    }
+    
+    
+    //Guardar datos de la persona que lleva el boleto
+    public ResultSet consulta(String sql){
+        ResultSet res = null;
+        try{
+            Connection Con = clsConexion.getConexion();
+            PreparedStatement pstm = Con.prepareStatement(sql);
+            res = pstm.executeQuery();
+        }catch(SQLException e){
+            System.err.println("Error consulta: " + e.getMessage());
+        }
+        return res;
+    }
+    public DefaultComboBoxModel Obt_Vuelo(){
+        DefaultComboBoxModel ListaModelo = new DefaultComboBoxModel();
+        ListaModelo.addElement("Seleccione un vuelo");
+        ResultSet res = this.consulta("Select * from TB_VUELO Where Estatus = 'Programado' and TipoAvion = 'Boing747'");
+        
+        try{
+            while(res.next()){
+                ListaModelo.addElement(res.getString("Id"));
+            }
+            res.close();
+        }catch(SQLException ex){
+            System.err.println(ex.getMessage());
+        }
+        return ListaModelo;
+    }
+    public int fncReservaBoing( clsReservacion objReservacion ){
+        int res = 0;
+        try{
+            Connection Con = clsConexion.getConexion();
+            String consulta = "INSERT INTO TB_RESERVACION(VUELO_ID, FILA, ASIENTO, NO_PASAPORTE, NOMBRE, NACIONALIDAD, FECHA_NAC) VALUES(?,?,?,?,?,?,?)";
+            PreparedStatement ps = Con.prepareStatement(consulta);
+            ps.setInt(1, objReservacion.getVUELO_ID());
+            ps.setInt(2, objReservacion.getFILA());
+            ps.setString(3, objReservacion.getASIENTO());
+            ps.setInt(4, objReservacion.getNO_PASAPORTE());
+            ps.setString(5, objReservacion.getNOMBRE());
+            ps.setString(6, objReservacion.getNACIONALIDAD());
+            ps.setString(7, objReservacion.getFECHA_NAC());
+            ps.executeUpdate();
+            res = 1;
+        }catch(SQLException Ex){
+            System.out.println(Ex.getMessage());
+        }
+        return res;
+    }
+    
+    public ResultSet consultaEmbraer(String sql){
+        ResultSet res = null;
+        try{
+            Connection Con = clsConexion.getConexion();
+            PreparedStatement pstm = Con.prepareStatement(sql);
+            res = pstm.executeQuery();
+        }catch(SQLException e){
+            System.err.println("Error consulta: " + e.getMessage());
+        }
+        return res;
+    }
+    public DefaultComboBoxModel Obt_VueloEmbraer(){
+        DefaultComboBoxModel ListaModelo = new DefaultComboBoxModel();
+        ListaModelo.addElement("Seleccione un vuelo");
+        ResultSet res = this.consultaEmbraer("Select * from TB_VUELO Where Estatus = 'Programado' and TipoAvion = 'Embraer'");
+        
+        try{
+            while(res.next()){
+                ListaModelo.addElement(res.getString("Id"));
+            }
+            res.close();
+        }catch(SQLException ex){
+            System.err.println(ex.getMessage());
+        }
+        return ListaModelo;
     }
 }
